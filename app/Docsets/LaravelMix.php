@@ -21,6 +21,11 @@ class LaravelMix extends BaseDocset
 
     public function grab(): bool
     {
+        /**
+         * can't use PCRE regex style, so need to
+         * type the whole list of shit (versions)
+         * to ignore.
+         */
         $toIgnore = implode('|', [
             'cdn-cgi',
             'docs/1.7/',
