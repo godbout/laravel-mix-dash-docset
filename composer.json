@@ -1,5 +1,9 @@
 {
     "require": {
         "godbout/dash-docset-builder": "^2.0"
+    },
+    "scripts": {
+        "test": "phpunit --group=default --color=always",
+        "format": "php-cs-fixer fix -vvv --config=.php_cs.dist --ansi"
     }
 }
