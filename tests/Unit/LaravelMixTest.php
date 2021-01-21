@@ -21,7 +21,7 @@ class LaravelMixTest extends TestCase
     public function it_can_generate_a_table_of_contents()
     {
         $toc = $this->docset->entries(
-            $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/plugins/index.html'
+            $this->docset->downloadedDirectory() . '/' . $this->docset->url() . '/docs/main/installation.html'
         );
 
         $this->assertNotEmpty($toc);
