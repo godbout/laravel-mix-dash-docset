@@ -5,6 +5,7 @@ namespace App\Docsets;
 use Godbout\DashDocsetBuilder\Docsets\BaseDocset;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 class LaravelMix extends BaseDocset
@@ -64,7 +65,24 @@ class LaravelMix extends BaseDocset
 
         $entries = collect();
 
-        //
+        $entries = $entries->union($this->guideEntries($crawler, $file));
+
+        return $entries;
+    }
+
+    protected function guideEntries(HtmlPageCrawler $crawler, string $file)
+    {
+        $entries = collect();
+
+        if (Str::contains($file, "{$this->url()}/docs/main/installation.html")) {
+            $crawler->filter('nav#nav li a')->each(function (HtmlPageCrawler $node) use ($entries) {
+                $entries->push([
+                    'name' => trim($node->text()),
+                    'type' => 'Guide',
+                    'path' => $this->url() . '/docs/main/' . $node->attr('href'),
+                ]);
+            });
+        }
 
         return $entries;
     }
