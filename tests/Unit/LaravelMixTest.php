@@ -30,15 +30,15 @@ class LaravelMixTest extends TestCase
     /** @test */
     public function it_can_format_the_documentation_files()
     {
-        $scripts = '<script';
+        $footer = '<footer';
 
         $this->assertStringContainsString(
-            $scripts,
+            $footer,
             Storage::get($this->docset->downloadedIndex())
         );
 
         $this->assertStringNotContainsString(
-            $scripts,
+            $footer,
             $this->docset->format($this->docset->downloadedIndex())
         );
     }
