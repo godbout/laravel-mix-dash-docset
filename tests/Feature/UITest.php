@@ -7,7 +7,6 @@ use Godbout\DashDocsetBuilder\Services\DocsetBuilder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Wa72\HtmlPageDom\HtmlPageCrawler;
 
 class UITest extends TestCase
 {
@@ -27,5 +26,21 @@ class UITest extends TestCase
             fwrite(STDOUT, PHP_EOL . PHP_EOL . "\e[1;33mPackaging laravel-mix..." . PHP_EOL);
             Artisan::call('package laravel-mix');
         }
+    }
+
+    /** @test */
+    public function the_header_gets_removed_from_the_dash_docset_files()
+    {
+        $header = '<header class="sticky';
+
+        $this->assertStringContainsString(
+            $header,
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertStringNotContainsString(
+            $header,
+            Storage::get($this->docset->innerIndex())
+        );
     }
 }
