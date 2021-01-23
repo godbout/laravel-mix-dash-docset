@@ -43,4 +43,20 @@ class UITest extends TestCase
             Storage::get($this->docset->innerIndex())
         );
     }
+
+    /** @test */
+    public function the_left_sidebar_gets_removed_from_the_dash_docset_files()
+    {
+        $leftSidebar = 'id="nav';
+
+        $this->assertStringContainsString(
+            $leftSidebar,
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertStringNotContainsString(
+            $leftSidebar,
+            Storage::get($this->docset->innerIndex())
+        );
+    }
 }

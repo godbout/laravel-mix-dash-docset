@@ -92,6 +92,7 @@ class LaravelMix extends BaseDocset
         $crawler = HtmlPageCrawler::create(Storage::get($file));
 
         $this->removeHeader($crawler);
+        $this->removeLeftSidebar($crawler);
 
         //
 
@@ -101,5 +102,10 @@ class LaravelMix extends BaseDocset
     protected function removeHeader(HtmlPageCrawler $crawler)
     {
         $crawler->filter('header.sticky')->remove();
+    }
+
+    protected function removeLeftSidebar(HtmlPageCrawler $crawler)
+    {
+        $crawler->filter('#nav')->remove();
     }
 }
