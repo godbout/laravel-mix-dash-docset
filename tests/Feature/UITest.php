@@ -59,4 +59,20 @@ class UITest extends TestCase
             Storage::get($this->docset->innerIndex())
         );
     }
+
+    /** @test */
+    public function the_footer_gets_removed_from_the_dash_docset_files()
+    {
+        $footer = '<footer';
+
+        $this->assertStringContainsString(
+            $footer,
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertStringNotContainsString(
+            $footer,
+            Storage::get($this->docset->innerIndex())
+        );
+    }
 }
