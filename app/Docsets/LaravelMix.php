@@ -95,6 +95,8 @@ class LaravelMix extends BaseDocset
         $this->removeLeftSidebar($crawler);
         $this->removeFooter($crawler);
 
+        $this->insertDashTableOfContents($crawler);
+
         return $crawler->saveHTML();
     }
 
@@ -111,5 +113,21 @@ class LaravelMix extends BaseDocset
     protected function removeFooter(HtmlPageCrawler $crawler)
     {
         $crawler->filter('footer.flex')->remove();
+    }
+
+    protected function insertDashTableOfContents(HtmlPageCrawler $crawler)
+    {
+        $crawler->filter('body')
+            ->before('<a name="//apple_ref/cpp/Section/Top" class="dashAnchor"></a>');
+
+        $crawler->filter('h2, h3, h4')->each(function (HtmlPageCrawler $node) {
+            $node->prepend(
+                '<a id="' . Str::slug(
+                    $node->text()
+                ) . '" name="//apple_ref/cpp/Section/' . rawurlencode(
+                    $node->text()
+                ) . '" class="dashAnchor"></a>'
+            );
+        });
     }
 }
