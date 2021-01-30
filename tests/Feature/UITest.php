@@ -91,4 +91,20 @@ class UITest extends TestCase
             Storage::get($this->docset->innerIndex())
         );
     }
+
+    /** @test */
+    public function the_content_gets_centered_in_the_dash_docset_files()
+    {
+        $contentClasses = 'lg:w-3/4 xl:w-3/5';
+
+        $this->assertStringContainsString(
+            $contentClasses,
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertStringNotContainsString(
+            $contentClasses,
+            Storage::get($this->docset->innerIndex())
+        );
+    }
 }
