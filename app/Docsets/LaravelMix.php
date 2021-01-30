@@ -109,6 +109,7 @@ class LaravelMix extends BaseDocset
 
         $this->removeHeader($crawler);
         $this->removeLeftSidebar($crawler);
+        $this->removeRightKindaSidebar($crawler);
         $this->removeFooter($crawler);
 
         $this->insertOnlineRedirection($crawler, $file);
@@ -125,6 +126,11 @@ class LaravelMix extends BaseDocset
     protected function removeLeftSidebar(HtmlPageCrawler $crawler)
     {
         $crawler->filter('#nav')->remove();
+    }
+
+    protected function removeRightKindaSidebar(HtmlPageCrawler $crawler)
+    {
+        $crawler->filter('.hidden.flex-col')->remove();
     }
 
     protected function removeFooter(HtmlPageCrawler $crawler)
