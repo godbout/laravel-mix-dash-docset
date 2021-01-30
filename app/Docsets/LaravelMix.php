@@ -66,6 +66,7 @@ class LaravelMix extends BaseDocset
         $entries = collect();
 
         $entries = $entries->union($this->guideEntries($crawler, $file));
+        $entries = $entries->union($this->sectionEntries($crawler, $file));
 
         return $entries;
     }
@@ -83,6 +84,21 @@ class LaravelMix extends BaseDocset
                 ]);
             });
         }
+
+        return $entries;
+    }
+
+    protected function sectionEntries(HtmlPageCrawler $crawler, string $file)
+    {
+        $entries = collect();
+
+        $crawler->filter('h2, h3')->each(function (HtmlPageCrawler $node) use ($entries, $file) {
+            $entries->push([
+                'name' => trim($node->text()),
+                'type' => 'Section',
+                'path' => Str::after($file . '#' . $node->getAttribute('id'), $this->innerDirectory()),
+            ]);
+        });
 
         return $entries;
     }
