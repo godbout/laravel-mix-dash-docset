@@ -112,6 +112,8 @@ class LaravelMix extends BaseDocset
         $this->removeRightKindaSidebar($crawler);
         $this->removeFooter($crawler);
 
+        $this->centerContent($crawler);
+
         $this->insertOnlineRedirection($crawler, $file);
         $this->insertDashTableOfContents($crawler);
 
@@ -136,6 +138,14 @@ class LaravelMix extends BaseDocset
     protected function removeFooter(HtmlPageCrawler $crawler)
     {
         $crawler->filter('footer.flex')->remove();
+    }
+
+    protected function centerContent(HtmlPageCrawler $crawler)
+    {
+        $crawler->filter('#content')
+            ->removeClass('lg:w-3/4')
+            ->removeClass('xl:w-3/5')
+        ;
     }
 
     protected function insertOnlineRedirection(HtmlPageCrawler $crawler, string $file)
