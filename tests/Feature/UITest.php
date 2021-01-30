@@ -61,6 +61,22 @@ class UITest extends TestCase
     }
 
     /** @test */
+    public function the_right_kinda_sidebar_gets_removed_from_the_dash_docset_files()
+    {
+        $rightKindaSidebar = '<div class="hidden pt-4 px-6';
+
+        $this->assertStringContainsString(
+            $rightKindaSidebar,
+            Storage::get($this->docset->downloadedIndex())
+        );
+
+        $this->assertStringNotContainsString(
+            $rightKindaSidebar,
+            Storage::get($this->docset->innerIndex())
+        );
+    }
+
+    /** @test */
     public function the_footer_gets_removed_from_the_dash_docset_files()
     {
         $footer = '<footer';
