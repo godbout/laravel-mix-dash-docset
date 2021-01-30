@@ -96,7 +96,7 @@ class LaravelMix extends BaseDocset
             $entries->push([
                 'name' => trim($node->text()),
                 'type' => 'Section',
-                'path' => Str::after($file . '#' . $node->getAttribute('id'), $this->innerDirectory()),
+                'path' => Str::after($file . '#' . Str::slug($node->text()), $this->innerDirectory()),
             ]);
         });
 
@@ -111,6 +111,7 @@ class LaravelMix extends BaseDocset
         $this->removeLeftSidebar($crawler);
         $this->removeFooter($crawler);
 
+        $this->insertOnlineRedirection($crawler, $file);
         $this->insertDashTableOfContents($crawler);
 
         return $crawler->saveHTML();
@@ -129,6 +130,13 @@ class LaravelMix extends BaseDocset
     protected function removeFooter(HtmlPageCrawler $crawler)
     {
         $crawler->filter('footer.flex')->remove();
+    }
+
+    protected function insertOnlineRedirection(HtmlPageCrawler $crawler, string $file)
+    {
+        $onlineUrl = Str::substr(Str::after($file, $this->innerDirectory()), 1, -5);
+
+        $crawler->filter('html')->prepend("<!-- Online page at https://$onlineUrl -->");
     }
 
     protected function insertDashTableOfContents(HtmlPageCrawler $crawler)
