@@ -14,5 +14,5 @@ ___
 
 <br>
 <p align="center">
-    nice GIF that doesn't suck.
+    <img src="https://github.com/godbout/laravel-mix-dash-docset/blob/media/laravel-mix-dash-docset.gif" alt="Laravel Mix for Dash">
 </p>
